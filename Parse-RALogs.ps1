@@ -5,7 +5,7 @@
 .NOTES
   Author: Tom Biscardi
   GitHub: tbisque
-  Email:  biscardii (at) outlook (dot) com
+  Email:  biscardi (at) outlook (dot) com
   Date:   11/1/2018
   
 .DESCRIPTION
