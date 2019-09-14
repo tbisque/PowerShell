@@ -23,7 +23,7 @@ $PastMonth = (Get-Date).AddMonths(-1)
 
 # Creates the Filename and the path to export
 $FileName = ($PastMonth.tostring('yyyy-MM-dd')+"_to_"+(Get-Date).ToString('yyyy-MM-dd'))
-$FilePath = "\\uncpath\Scripts\Outputs\RemoteAppLogs\$FileName.csv"
+$FilePath = "\\UncPath\Folder\$FileName.csv"
 
 # Gets the log events from the past month. Looks only for certain IDs.
 $Logs = Get-WinEvent -LogName $LogName -Oldest |

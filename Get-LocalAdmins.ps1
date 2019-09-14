@@ -22,7 +22,7 @@
 $Date = (Get-Date).tostring('yyyy-MM-dd')
 
 # Defining a folder we'll create for this Round's Procedure
-$ExportRoot = "\\UNCPATH\Scripts\Outputs\Admin Rights\$Date"
+$ExportRoot = "\\UNCPATH\Folder\$Date"
 
 # Variables defining where we will Export
 $ExportFileSrv = "$ExportRoot\LocalUsers-$Date.csv"
