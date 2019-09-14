@@ -1,6 +1,6 @@
 #.Requires PSSnapin for Exchange, or Exchange Online POSH Connection.
 
 #Goes through each mailbox, and looks for accounts with forwarding enabled
-Get-mailbox | 
-	where-object {$_.ForwardingAddress -ne $null} | 
-	select-object Name, PrimarySmtpAddress, ForwardingAddress
+Get-Mailbox | 
+	Where-Object {$_.ForwardingAddress -ne $null} | 
+	Select-Object Name, PrimarySmtpAddress, ForwardingAddress
