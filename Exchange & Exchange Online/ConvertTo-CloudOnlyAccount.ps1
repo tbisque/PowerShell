@@ -1,17 +1,20 @@
-function Get-ExoModuleInstallStatus {
-	$installed = (Get-InstalledModule | 
-		Where-Object name -Match "Exchange.Management.ExoPowershellModule")
+function Get-MSOnlineModuleStatus{
+	#Function ensures that MSOnline Module is installed, and connected. If not, installs and connects
 
-	#If the module isn't installed:
-	if (!$installed){
-		Write-Warning "Exchange Online Module not Installed."
-		Write-Host -f Cyan "To install the module, run the following cmdlet from an elevated PowerShell window:"	
-		"Install-Module -Name Microsoft.Exchange.Management.ExoPowershellModule -Verbose -Force;"        
-	}
-
-	$EXOSession = New-ExoPSSession
-	Import-PSSession $EXOSession
-}Get-ExoModuleInstallStatus
+    $ExoInstalled = Get-InstalledModule | Where-Object {$_.name -match "MSOnline"}
+    #Try to install the module, if it's not already:
+    If (!$ExoInstalled){
+        try {Install-Module MSOnline -Scope CurrentUser}
+        catch {
+            Write-Warning "Automatic install failed. MSOnline Module must be installed manually."
+            Write-Host -f Cyan "`nRun the following command from an elevated PowerShell window:`nInstall-Module MSOnline"
+        }
+    }
+    #Connect to the MsolService, if necessary
+    try {Get-MsolDomain -ErrorAction Stop}
+    catch {Connect-MsolService}
+}
+Get-MSOnlineModuleStatus
 
 #Explains the purpose of the script
 Write-Host -f Cyan "`nPurpose:"
@@ -28,7 +31,7 @@ Write-Warning "FOR ACCOUNTS ONLY THAT DON'T NEED TO BE IN ON-PREM AD!`nDO NOT PR
 Connect-MsolService
 
 #Ask the User for an Email Address
-$UserEmail = Read-Host "Enter the full email address of the Rep Account you've already moved in On-Prem AD"
+$UserEmail = Read-Host "Enter the full email address of the Account you've already moved to an non-AAD sync'd OU in On-Prem AD"
 
 #Try to Get the user from the delete users in O365
 try {
@@ -40,4 +43,4 @@ catch {
 }
 
 #Get the Account now that it's restored, and set the immutableID to null.
-Get-MsolUser -UserPrincipalName $UserEmail | Set-MsolUser -ImmutableId $null
+Get-MsolUser -UserPrincipalName $UserEmail | Set-MsolUser -ImmutableId ""
