@@ -12,6 +12,9 @@
   - Assumes Account running script has appropriate credentials for all DCs
 #>
 
+# Imports the PowerShell Module needed to talk to AD.
+Import-Module ActiveDirectory
+
 #Variable Definition
 $DCDiagBackupPath = "\\Fileserver\path\DCDiags\"
 $Date = Get-Date -Format "yyyy-MM-dd"
