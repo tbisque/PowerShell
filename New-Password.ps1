@@ -8,7 +8,7 @@ function New-Password {
 
 	[string]$PW = 0..$length | Foreach-Object {$PwChars | Get-Random}
 
-    $PW = $PW.Replace(" ","")
+	$PW = $PW.Replace(" ","")
 	
 	return $pw
 }
